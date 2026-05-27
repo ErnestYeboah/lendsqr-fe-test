@@ -1,0 +1,11 @@
+.sidebar {
+  position: sticky;
+  top: 0;
+  max-height: 100vh;
+  overflow-y: scroll;
+  padding: var(--padding-min);
+
+  .icon {
+    color: var(--alt-secondary-color);
+  }
+}

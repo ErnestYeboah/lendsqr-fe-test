@@ -6,9 +6,10 @@
   --secondary-color: #39cdcc;
   --accent-color: #213f7d;
   --text-color: #2e2e2e;
+  --alt-secondary-color: #7a8cb1;
 
   --step--1: clamp(0.9375rem, 0.9158rem + 0.1087vw, 1rem);
-  --step-0: clamp(1.125rem, 1.0815rem + 0.2174vw, 1.25rem);
+  --step-0: 1.2rem;
   --step-1: clamp(1.35rem, 1.2761rem + 0.3696vw, 1.5625rem);
   --step-2: clamp(1.62rem, 1.5041rem + 0.5793vw, 1.9531rem);
   --step-3: clamp(1.944rem, 1.771rem + 0.8651vw, 2.4414rem);
@@ -19,7 +20,7 @@
   --large-gap: clamp(6.75rem, 6.4891rem + 1.3043vw, 7.5rem);
   --radius: 5px;
   --padding-min: 2rem;
-  --padding: clamp(1.25rem, -0.0543rem + 6.5217vw, 5rem);
+  --padding: clamp(1.25rem, -0.0543rem + 6.5217vw, 4rem);
 }
 * {
   box-sizing: border-box;
@@ -40,15 +41,32 @@ img {
 
 input {
   display: block;
-  border-radius: var(--radius);
   font-size: 1.2rem;
   padding: 0.5rem 1rem;
   color: var(--text-color);
+
+  &:focus {
+    outline: 1px ridge var(--secondary-color);
+  }
 }
 
 button {
   background-color: var(--secondary-color);
   padding: 0.5rem 1rem;
-  border-radius: var(--radius);
   color: var(--primary-color);
+  cursor: pointer;
+  border: none;
+}
+
+::-webkit-scrollbar {
+  width: 1px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--alt-secondary-color);
+}
+
+/* Hover effect */
+::-webkit-scrollbar-thumb:hover {
+  background: #2563eb;
 }

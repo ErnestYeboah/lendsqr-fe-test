@@ -1,8 +1,11 @@
-import { Link } from "react-router-dom";
-import "./login.css";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  useEffect(() => {
+    document.title = "Lendsqr | Login";
+  }, []);
 
   return (
     <div className="login_wrapper p-(--padding) grid grid-rows-[auto_1fr] gap-(--padding) ">
@@ -25,15 +28,14 @@ const LoginPage = () => {
             <input
               type="text"
               placeholder="Email"
-              name="email"
-              className="outline outline-gray-200 w-full focus:outline-(--secondary-color) "
+              className="outline outline-gray-200 w-full rounded-(--radius)"
             />
             <div className="flex justify-between gap-4 items-center pr-4 outline outline-gray-200 ">
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 name="password"
-                className="w-full focus:outline-(--secondary-color)"
+                className="w-full rounded-(--radius)"
               />
               <p
                 className="text-(--secondary-color) cursor-pointer text-[.8rem]"
@@ -49,8 +51,9 @@ const LoginPage = () => {
               FORGOT PASSWORD?
             </Link>
             <button
-              className="w-full bg-(--secondary-color) text-white py-2 rounded-md hover:bg-(--secondary-color-hover)"
-              type="submit"
+              onClick={() => navigate("/admin")}
+              className="w-full bg-(--secondary-color) text-white py-2 hover:bg-(--secondary-color-hover) rounded-(--radius)"
+              type="button"
             >
               LOG IN
             </button>
