@@ -6,7 +6,7 @@ const AdminLayout = () => {
   return (
     <div className="grid lg:grid-cols-[20%_1fr]">
       <SideBar />
-      <div>
+      <div className="bg-gray-100 min-h-screen">
         <HeaderNavBar />
         <Outlet />
       </div>

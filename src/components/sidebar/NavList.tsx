@@ -1,25 +1,40 @@
 import { Link } from "react-router-dom";
 import { navlinks, type Children } from "./navlinks_data";
+import { useDispatch } from "react-redux";
+import { toggleSideBar } from "../../store/features/users_slice";
+import { useState } from "react";
 
 const NavItem = ({ item }: { item: Children }) => {
   const Icon = item.icon;
+  const [selectedLink, setSelectedLink] = useState<string>("");
+  const dispatch = useDispatch();
+
+  const onLinkSelcted = (label: string) => {
+    dispatch(toggleSideBar(false));
+    setSelectedLink(label);
+  };
+
   return (
-    <Link
-      to={item.to}
-      className="navlist_item text-(--alt-secondary-color) flex items-center gap-2 mb-4"
+    <div
+      className={
+        selectedLink === item.label ? "navlist_item active" : "navlist_item"
+      }
+      onClick={() => onLinkSelcted(item.label)}
     >
-      <Icon />
-      <h2 className="text-(length:--step-0)">{item.label}</h2>
-    </Link>
+      <Link to={item.to} className="navlist_item_link">
+        <Icon />
+        <h2 className="text-(length:--step-0)">{item.label}</h2>
+      </Link>
+    </div>
   );
 };
 
 const NavList = () => {
   return (
-    <div className="">
+    <div>
       {navlinks.map((group) => (
         <div key={group.id}>
-          <p className="navlist_group_label mt-(--padding-min) mb-4 text-[.8rem]  text-gray-600">
+          <p className="navlist_group_label m-(--padding-min) text-[.8rem] text-gray-600">
             {group.parentLabel}
           </p>
 

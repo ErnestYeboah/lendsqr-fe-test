@@ -51,7 +51,7 @@ const LoginPage = () => {
               FORGOT PASSWORD?
             </Link>
             <button
-              onClick={() => navigate("/admin")}
+              onClick={() => navigate("/admin/users")}
               className="w-full bg-(--secondary-color) text-white py-2 hover:bg-(--secondary-color-hover) rounded-(--radius)"
               type="button"
             >

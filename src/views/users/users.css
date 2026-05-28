@@ -1,0 +1,230 @@
+.users_card_wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.user_card {
+  --_first-color: #df18ff;
+  --_second-color: #733fff;
+  --_third-color: #f55f44;
+  --_last-color: #ff4a77;
+
+  background-color: var(--primary-color);
+  border: 1px solid #e5e8ee;
+  box-shadow: 3px 5px 20px rgba(0 0 0 / 0.04);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  min-height: 10px;
+  padding: 2cqi;
+  gap: var(--gap);
+
+  .icon_parent {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+  }
+
+  .first_icon_parent {
+    background-color: hsla(from var(--_first-color) h s l / 0.2);
+    color: var(--_first-color);
+  }
+  .second_icon_parent {
+    background-color: hsla(from var(--_second-color) h s l / 0.2);
+    color: var(--_second-color);
+  }
+  .third_icon_parent {
+    background-color: hsla(from var(--_third-color) h s l / 0.2);
+    color: var(--_third-color);
+  }
+  .last_icon_parent {
+    background-color: hsla(from var(--_last-color) h s l / 0.2);
+    color: var(--_last-color);
+  }
+
+  .icon_parent .icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  & .label {
+    color: var(--alt-secondary-color);
+    font-size: 0.8rem;
+    line-height: 1;
+  }
+
+  & .label + p {
+    color: var(--accent-color);
+    font-size: var(--step-1);
+    line-height: 1;
+  }
+}
+
+.users_table_section {
+  margin-block: 2.5rem;
+  height: 70vh;
+  border-radius: var(--radius);
+  box-shadow: 3px 5px 20px rgba(0 0 0 / 0.04);
+}
+
+.users_table {
+  scrollbar-width: thin;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.users_table th,
+.users_table td {
+  color: var(--alt-secondary-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.users_table .users_table_head {
+  color: var(--accent-color);
+  padding-block: 0.8rem;
+  padding-inline: 1rem;
+  font-size: 0.8rem;
+}
+
+.users_table .users_table_head svg {
+  color: #545f7d;
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+.users_sort_button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background-color: transparent;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+}
+
+.users_sort_button svg {
+  opacity: 0.75;
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.users_sort_button:hover svg,
+.users_sort_button svg.is_sorted {
+  opacity: 1;
+}
+
+.users_sort_button svg.is_sorted.desc {
+  transform: rotate(180deg);
+}
+
+.users_table .users_table_action_head,
+.users_table .users_table_action {
+  width: 3rem;
+  text-align: center;
+}
+
+.users_table .users_table_action svg {
+  color: var(--accent-color);
+}
+
+.status_badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 5.25rem;
+  height: 1.875rem;
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.status_badge.inactive {
+  background-color: rgba(84 95 125 / 0.06);
+  color: #545f7d;
+}
+
+.status_badge.pending {
+  background-color: rgba(233 178 0 / 0.1);
+  color: #e9b200;
+}
+
+.status_badge.blacklisted {
+  background-color: rgba(228 3 59 / 0.1);
+  color: #e4033b;
+}
+
+.status_badge.active {
+  background-color: rgba(57 205 98 / 0.1);
+  color: #39cd62;
+}
+
+.users_table_footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #545f7d;
+  font-size: 0.78rem;
+  padding-top: 1rem;
+}
+
+.users_table_showing {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.users_table_showing select {
+  min-width: 5rem;
+  border: 0;
+  border-radius: var(--radius);
+  background-color: rgba(33 63 125 / 0.1);
+  color: var(--accent-color);
+  padding: 0.55rem 0.75rem;
+  outline: none;
+}
+
+.users_pagination {
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+}
+
+.users_pagination button {
+  width: 1.75rem;
+  height: 1.75rem;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius);
+  background-color: rgba(33 63 125 / 0.1);
+  color: var(--accent-color);
+  padding: 0;
+}
+
+.users_pagination button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.users_pagination span {
+  color: rgba(84 95 125 / 0.65);
+}
+
+.users_pagination span:first-of-type {
+  color: var(--accent-color);
+}
+
+.menu_dialog {
+  & button {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+}

@@ -57,7 +57,7 @@ button {
   cursor: pointer;
   border: none;
 }
-
+/* 
 ::-webkit-scrollbar {
   width: 1px;
 }
@@ -69,4 +69,27 @@ button {
 /* Hover effect */
 ::-webkit-scrollbar-thumb:hover {
   background: #2563eb;
+}
+*/ .icon {
+  color: var(--alt-secondary-color);
+}
+
+.mobile_header_items {
+  display: none;
+
+  @media (width < 992px) {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+nav {
+  @media (width > 992px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: space-between;
+    align-items: center;
+  }
 }
