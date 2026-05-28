@@ -29,6 +29,7 @@ import UsersFilterModal, {
   emptyFilters,
   type UserFilters,
 } from "./UsersFilterModal";
+import TableSkeleton from "../../components/TableSkeleton";
 
 const rowsPerPage = 10;
 
@@ -276,6 +277,7 @@ const UsersTable = () => {
 
   return (
     <section className="users_table_section">
+      {status === "pending" && <TableSkeleton />}
       <TableVirtuoso
         data={sortedUsers}
         components={tableComponents}

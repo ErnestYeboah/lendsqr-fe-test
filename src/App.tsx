@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import LoginPage from "./views/LoginPage";
 import AdminLayout from "./views/AdminLayout";
 import UsersPage from "./views/users/UsersPage";
@@ -7,6 +8,7 @@ import UserDetailsPage from "./views/users/users_details/UserDetailsPage";
 function App() {
   return (
     <>
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/admin" element={<AdminLayout />}>

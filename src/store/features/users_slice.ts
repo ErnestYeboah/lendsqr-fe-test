@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 export interface User {
   joinedAt: string;
@@ -74,7 +75,7 @@ export const fetchUsers = createAsyncThunk<
   async (payload: number = 1, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/users?_page=${payload}&_per_page=10`,
+        `https://lendsqr-api-zxvj.onrender.com/users?_page=${payload}_limit=10`,
       );
       return {
         users: response.data.data,
@@ -150,6 +151,7 @@ export const UsersSlice = createSlice({
       })
       .addCase(fetchUsers.rejected, (state) => {
         state.status = "failed";
+        toast.error("An error occured could not fetch user data");
       });
   },
 });
