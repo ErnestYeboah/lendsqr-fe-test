@@ -11,7 +11,7 @@ const HeaderNavBar = () => {
   return (
     <>
       <InternetStatusBar />
-      <nav className="shadow-sm sticky z-80 max-w-full left-0 right-0 top-0 h-16 px-(--padding-min) bg-(--primary-color) flex justify-between">
+      <nav className="shadow-sm sticky z-10 max-w-full left-0 right-0 top-0 h-16 px-(--padding-min) bg-(--primary-color) flex justify-between">
         <div className="flex h-[70%] max-[992px]:hidden max-w-100 overflow-hidden rounded-sm">
           <input
             type="search"

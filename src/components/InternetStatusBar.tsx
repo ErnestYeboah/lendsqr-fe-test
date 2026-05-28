@@ -38,7 +38,7 @@ const InternetStatusBar = () => {
   return (
     <div
       className={cn(
-        "fixed top-0 grid grid-cols-[1fr_auto] justify-between left-0 right-0 z-50 text-center p-(--gap)  text-(--text-color)",
+        "fixed top-0 grid grid-cols-[1fr_auto] justify-between left-0 right-0 z-200 text-center p-(--gap)  text-(--text-color)",
         isOnline ? "bg-green-300" : "bg-red-300",
       )}
     >
