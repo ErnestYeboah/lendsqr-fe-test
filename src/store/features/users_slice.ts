@@ -30,6 +30,7 @@ interface State {
   totalUsers: number;
   status: "idle" | "pending" | "success" | "failed";
   showSideBar: boolean;
+  selectedUser: User | null;
 }
 
 interface FetchUsersResponse {
@@ -37,6 +38,32 @@ interface FetchUsersResponse {
   page: number;
   totalUsers: number;
 }
+
+const getUserFromLocalStorage = () => {
+  const savedUser = localStorage.getItem("selectedUser");
+  return savedUser ? JSON.parse(savedUser) : null;
+};
+
+const saveUserToLocalStorage = (user: User) => {
+  localStorage.setItem("selectedUser", JSON.stringify(user));
+};
+
+const updateUserInCollections = (state: State, updatedUser: User) => {
+  state.users = state.users.map((user) =>
+    user.id === updatedUser.id ? updatedUser : user,
+  );
+
+  Object.keys(state.usersByPage).forEach((page) => {
+    state.usersByPage[Number(page)] = state.usersByPage[Number(page)].map(
+      (user) => (user.id === updatedUser.id ? updatedUser : user),
+    );
+  });
+
+  if (state.selectedUser?.id === updatedUser.id) {
+    state.selectedUser = updatedUser;
+    saveUserToLocalStorage(updatedUser);
+  }
+};
 
 export const fetchUsers = createAsyncThunk<
   FetchUsersResponse,
@@ -79,6 +106,7 @@ const initialState: State = {
   totalUsers: 0,
   status: "idle",
   showSideBar: false,
+  selectedUser: getUserFromLocalStorage(),
 };
 
 export const UsersSlice = createSlice({
@@ -87,6 +115,23 @@ export const UsersSlice = createSlice({
   reducers: {
     toggleSideBar(state, action: { payload: boolean }) {
       state.showSideBar = action.payload;
+    },
+    activateUser(state, action: { payload: User }) {
+      updateUserInCollections(state, action.payload);
+    },
+    blacklistUser(state, action: { payload: User }) {
+      updateUserInCollections(state, action.payload);
+    },
+
+    saveUser(state, action: { payload: User }) {
+      const user = action.payload;
+      state.selectedUser = user;
+      saveUserToLocalStorage(user);
+    },
+
+    clearSelectedUser(state) {
+      state.selectedUser = null;
+      localStorage.removeItem("selectedUser");
     },
   },
   extraReducers(builder) {
@@ -111,4 +156,5 @@ export const UsersSlice = createSlice({
 
 export default UsersSlice.reducer;
 export const usersReducer = (state: { users: State }) => state.users;
-export const { toggleSideBar } = UsersSlice.actions;
+export const { toggleSideBar, activateUser, blacklistUser, saveUser } =
+  UsersSlice.actions;

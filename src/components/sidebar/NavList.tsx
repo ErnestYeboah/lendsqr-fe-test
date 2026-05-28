@@ -23,7 +23,7 @@ const NavItem = ({ item }: { item: Children }) => {
     >
       <Link to={item.to} className="navlist_item_link">
         <Icon />
-        <h2 className="text-(length:--step-0)">{item.label}</h2>
+        <h2 className="text-(length:--step--1)">{item.label}</h2>
       </Link>
     </div>
   );

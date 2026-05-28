@@ -6,6 +6,8 @@ import { BsFillHouseFill } from "react-icons/bs";
 import { cn } from "../../utils/clsx_merge";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSideBar, usersReducer } from "../../store/features/users_slice";
+import { Link } from "react-router-dom";
+import { IoMdExit } from "react-icons/io";
 const SideBar = () => {
   const { showSideBar } = useSelector(usersReducer);
   const dispatch = useDispatch();
@@ -27,24 +29,31 @@ const SideBar = () => {
           <div>
             <div className="flex gap-2 items-center p-(--padding-min) ">
               <IoBriefcaseSharp className="icon" />
-              <p className="text-(length:--step-0) text-(--accent-color)">
+              <p className="text-(length:--step--1) text-(--accent-color)">
                 Switch Organization
               </p>
               <FaChevronDown color="var(--alt-secondary-color)" />
             </div>
             <div className="flex gap-2 items-center p-(--padding-min)">
               <BsFillHouseFill className="icon" />
-              <p className="text-(length:--step-0) text-(--alt-secondary-color)">
+              <p className="text-(length:--step--1) text-(--alt-secondary-color)">
                 Dashboard
               </p>
             </div>
             <NavList />
             <a
               href="/"
-              className="text-(length:--step-0) underline  text-(--accent-color) px-(--padding-min)"
+              className="text-(length:--step--1) lg:hidden underline  text-(--accent-color) px-(--padding-min)"
             >
               Docs
             </a>
+            <Link
+              to={"/"}
+              className="text-(length:--step--1)  text-(--accent-color) p-(--padding-min) flex items-center gap-2"
+            >
+              <IoMdExit />
+              Logout
+            </Link>
           </div>
         </div>
       </div>

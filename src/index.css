@@ -8,7 +8,7 @@
   --text-color: #2e2e2e;
   --alt-secondary-color: #7a8cb1;
 
-  --step--1: clamp(0.9375rem, 0.9158rem + 0.1087vw, 1rem);
+  --step--1: clamp(0.9375rem, 0.9158rem + 0.1087vw, 0.8rem);
   --step-0: 1.2rem;
   --step-1: clamp(1.35rem, 1.2761rem + 0.3696vw, 1.5625rem);
   --step-2: clamp(1.62rem, 1.5041rem + 0.5793vw, 1.9531rem);
@@ -19,8 +19,8 @@
   --gap: 1rem;
   --large-gap: clamp(6.75rem, 6.4891rem + 1.3043vw, 7.5rem);
   --radius: 5px;
-  --padding-min: 2rem;
-  --padding: clamp(1.25rem, -0.0543rem + 6.5217vw, 4rem);
+  --padding-min: 1rem;
+  --padding: clamp(2rem, 4vw, 3rem);
 }
 * {
   box-sizing: border-box;
@@ -41,7 +41,7 @@ img {
 
 input {
   display: block;
-  font-size: 1.2rem;
+  font-size: var(--step--1);
   padding: 0.5rem 1rem;
   color: var(--text-color);
 
@@ -52,6 +52,7 @@ input {
 
 button {
   background-color: var(--secondary-color);
+  font-size: var(--step--1);
   padding: 0.5rem 1rem;
   color: var(--primary-color);
   cursor: pointer;

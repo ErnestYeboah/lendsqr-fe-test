@@ -1,8 +1,8 @@
 .users_card_wrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
   gap: 2rem;
-  margin-top: 2rem;
+  margin-block: var(--padding);
 }
 
 .user_card {
@@ -22,8 +22,8 @@
   gap: var(--gap);
 
   .icon_parent {
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     display: grid;
     place-items: center;
@@ -47,25 +47,25 @@
   }
 
   .icon_parent .icon {
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
   }
 
   & .label {
     color: var(--alt-secondary-color);
-    font-size: 0.8rem;
-    line-height: 1;
+    font-size: 0.7rem;
   }
 
   & .label + p {
     color: var(--accent-color);
-    font-size: var(--step-1);
+    font-size: var(--step-0);
     line-height: 1;
   }
 }
 
 .users_table_section {
-  margin-block: 2.5rem;
+  --table-fontsize: 0.7rem;
+  margin-block: var(--padding);
   height: 70vh;
   border-radius: var(--radius);
   box-shadow: 3px 5px 20px rgba(0 0 0 / 0.04);
@@ -85,11 +85,15 @@
   text-overflow: ellipsis;
 }
 
+.users_table td {
+  font-size: var(--step--1);
+}
+
 .users_table .users_table_head {
   color: var(--accent-color);
   padding-block: 0.8rem;
   padding-inline: 1rem;
-  font-size: 0.8rem;
+  font-size: var(--table-fontsize);
 }
 
 .users_table .users_table_head svg {
@@ -101,33 +105,165 @@
 .users_sort_button {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
   background-color: transparent;
   color: inherit;
   font: inherit;
   padding: 0;
 }
 
-.users_sort_button svg {
+.users_filter_head {
+  overflow: visible !important;
+  position: relative;
+}
+
+.users_head_content {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.users_filter_button {
+  display: inline-grid;
+  place-items: center;
+  width: 1rem;
+  height: 1rem;
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+.users_filter_button svg {
   opacity: 0.75;
   transition:
     opacity 160ms ease,
     transform 160ms ease;
 }
 
-.users_sort_button:hover svg,
-.users_sort_button svg.is_sorted {
+.users_filter_button:hover svg,
+.users_filter_button svg.is_sorted {
   opacity: 1;
 }
 
-.users_sort_button svg.is_sorted.desc {
+.users_filter_button svg.is_sorted.desc {
   transform: rotate(180deg);
+}
+
+.users_filter_modal {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  left: 1rem;
+  z-index: 30;
+  width: 17rem;
+  display: grid;
+  gap: 1rem;
+  height: 50vh;
+  overflow-y: scroll;
+  border: 1px solid rgba(84 95 125 / 0.14);
+  border-radius: var(--radius);
+  background-color: var(--primary-color);
+  box-shadow: 3px 5px 20px rgba(0 0 0 / 0.08);
+  padding: 1.25rem;
+}
+
+.users_filter_modal label {
+  display: grid;
+  gap: 0.4rem;
+  color: #545f7d;
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-transform: none;
+}
+
+.users_filter_modal input,
+.users_filter_modal select {
+  width: 100%;
+  height: 2.5rem;
+  border: 1px solid rgba(33 63 125 / 0.16);
+  border-radius: var(--radius);
+  background-color: var(--primary-color);
+  color: var(--accent-color);
+  font-size: 0.8rem;
+  padding: 0.55rem 0.8rem;
+  outline: none;
+}
+
+.users_filter_modal input::placeholder {
+  color: rgba(84 95 125 / 0.55);
+}
+
+.users_filter_modal select {
+  appearance: none;
+}
+
+.users_filter_select,
+.users_filter_date {
+  position: relative;
+  display: block;
+}
+
+.users_filter_select svg,
+.users_filter_date svg {
+  position: absolute;
+  top: 50%;
+  right: 0.8rem;
+  width: 0.85rem;
+  height: 0.85rem;
+  color: var(--accent-color);
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.users_filter_date input::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+
+.users_filter_actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9rem;
+}
+
+.users_filter_actions button {
+  height: 2.5rem;
+  border-radius: var(--radius);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0;
+}
+
+.users_filter_actions .reset {
+  border: 1px solid var(--accent-color);
+  background-color: var(--primary-color);
+  color: var(--accent-color);
+}
+
+.users_filter_actions .apply {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
 }
 
 .users_table .users_table_action_head,
 .users_table .users_table_action {
   width: 3rem;
   text-align: center;
+}
+
+.users_table .users_table_action {
+  overflow: visible;
+  position: relative;
+}
+
+.users_table_action_button {
+  width: 2rem;
+  display: grid;
+  place-content: center;
+  border-radius: 50%;
+  background-color: transparent;
+  color: var(--accent-color);
+}
+
+.users_table_action_button:hover {
+  background-color: rgba(33 63 125 / 0.08);
 }
 
 .users_table .users_table_action svg {
@@ -222,9 +358,29 @@
 }
 
 .menu_dialog {
-  & button {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-  }
+  position: absolute;
+  top: 2rem;
+  right: 1rem;
+  z-index: 20;
+  display: grid;
+  padding: var(--padding-min);
+  gap: var(--gap);
+  border-radius: var(--radius);
+  background-color: var(--primary-color);
+  box-shadow: 3px 5px 20px rgba(0 0 0 / 0.04);
+}
+
+.menu_dialog button {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background-color: transparent;
+  color: #545f7d;
+  font-weight: 500;
+  padding: 0;
+  font-size: var(--step--1);
+}
+
+.menu_dialog button:hover {
+  color: var(--accent-color);
 }

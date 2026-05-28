@@ -7,14 +7,18 @@ import UsersTable from "./UsersTable";
 import "./users.css";
 import { useSelector } from "react-redux";
 import { usersReducer } from "../../store/features/users_slice";
+import { useEffect } from "react";
 
 const UsersPage = () => {
   const { totalUsers } = useSelector(usersReducer);
+  useEffect(() => {
+    document.title = "Lendsqr | Users";
+  }, []);
 
   return (
-    <div className="p-(--padding)">
+    <div className="p-(--padding) overflow-hidden">
       <h2 className="text-(--accent-color) text-(length:--step-1)">Users</h2>
-      <div className="users_card_wrapper">
+      <div className="users_card_wrapper ">
         <UsersCard>
           <div className="icon_parent first_icon_parent">
             <HiOutlineUsers className="icon first_icon" />

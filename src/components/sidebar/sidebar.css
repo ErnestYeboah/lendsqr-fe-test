@@ -1,7 +1,10 @@
 .sidebar_wrapper {
   @media (width < 992px) {
-    translate: -100% 0;
     position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    translate: -100% 0;
     width: 100%;
     transition: translate 500ms;
     z-index: 1000;
@@ -37,9 +40,9 @@
   /* for small screens */
   @media (width < 992px) {
     width: 80%;
-    background-color: var(--primary-color);
-    height: 100vh;
+    height: 100%;
     overflow-y: scroll;
+    background-color: var(--primary-color);
   }
 }
 

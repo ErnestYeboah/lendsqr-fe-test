@@ -11,8 +11,8 @@ const HeaderNavBar = () => {
   return (
     <>
       <InternetStatusBar />
-      <nav className="shadow-sm sticky w-full top-0 h-20 px-(--padding-min) bg-(--primary-color) flex justify-between">
-        <div className="flex h-10 max-[992px]:hidden max-w-100 overflow-hidden rounded-sm">
+      <nav className="shadow-sm sticky max-w-full left-0 right-0 top-0 h-16 px-(--padding-min) bg-(--primary-color) flex justify-between">
+        <div className="flex h-[70%] max-[992px]:hidden max-w-100 overflow-hidden rounded-sm">
           <input
             type="search"
             name="search"
@@ -31,6 +31,7 @@ const HeaderNavBar = () => {
           <CiBellOn size={"25"} />
           <figure className="avatar">
             <img
+              width={"40"}
               className="rounded-full"
               src="/assets/images/avatar.png"
               alt="User Avatar"

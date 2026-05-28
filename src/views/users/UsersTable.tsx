@@ -13,13 +13,22 @@ import { TableVirtuoso } from "react-virtuoso";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
 import {
+  activateUser,
+  blacklistUser,
   fetchUsers,
+  saveUser,
   type User,
   usersReducer,
 } from "../../store/features/users_slice";
 import type { AppDispatch } from "../../store/store";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import MenuDialog from "./MenuDialog";
+import { useNavigate } from "react-router-dom";
+import UsersFilterModal, {
+  emptyFilters,
+  type UserFilters,
+} from "./UsersFilterModal";
 
 const rowsPerPage = 10;
 
@@ -68,62 +77,103 @@ const fixedHeaderContent = (
   sortKey: ColumnKey,
   sortDirection: SortDirection,
   onSort: (key: ColumnKey) => void,
+  showFilterModal: boolean,
+  filters: UserFilters,
+  users: User[],
+  onToggleFilterModal: () => void,
+  onApplyFilters: (filters: UserFilters) => void,
+  onCloseFilterModal: () => void,
+  onResetFilters: () => void,
 ) => (
   <TableRow>
     {columns.map((column) => (
       <TableCell
         key={column.key}
-        className="users_table_head  "
+        className={
+          column.key === "company"
+            ? "users_table_head users_filter_head"
+            : "users_table_head"
+        }
         style={{ width: column.width }}
       >
-        <button
-          type="button"
-          className="users_sort_button"
-          onClick={() => onSort(column.key)}
-          aria-label={`Sort by ${column.label}`}
-        >
-          {column.label}
-          <IoFilter
-            className={
-              sortKey === column.key ? `is_sorted ${sortDirection}` : ""
-            }
-          />
-        </button>
+        <div className="users_head_content">
+          <button
+            type="button"
+            className="users_sort_button"
+            onClick={() => onSort(column.key)}
+            aria-label={`Sort by ${column.label}`}
+          >
+            {column.label}
+          </button>
+          {column.key === "company" && (
+            <>
+              <button
+                type="button"
+                className="users_filter_button"
+                onClick={onToggleFilterModal}
+                aria-label="Filter users"
+              >
+                <IoFilter
+                  className={
+                    sortKey === column.key ? `is_sorted ${sortDirection}` : ""
+                  }
+                />
+              </button>
+              {showFilterModal && (
+                <UsersFilterModal
+                  filters={filters}
+                  users={users}
+                  onApply={onApplyFilters}
+                  onClose={onCloseFilterModal}
+                  onReset={onResetFilters}
+                />
+              )}
+            </>
+          )}
+        </div>
       </TableCell>
     ))}
     <TableCell className="users_table_head users_table_action_head" />
   </TableRow>
 );
 
-const rowContent = (_index: number, user: User) => (
-  <>
-    <TableCell>{user.company}</TableCell>
-    <TableCell>{user.name}</TableCell>
-    <TableCell>{user.email}</TableCell>
-    <TableCell>{user.phoneNumber}</TableCell>
-    <TableCell>{formatDate(user.joinedAt)} 10:00 AM</TableCell>
-    <TableCell>
-      <span className={`status_badge ${user.status.toLowerCase()}`}>
-        {user.status}
-      </span>
-    </TableCell>
-    <TableCell className="users_table_action">
-      <BsThreeDotsVertical />
-    </TableCell>
-  </>
-);
 const UsersTable = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { usersByPage, totalUsers, status } = useSelector(usersReducer);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortKey, setSortKey] = useState<ColumnKey>("company");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
+  const [openMenuUserId, setOpenMenuUserId] = useState<string | null>(null);
+  const [showFilterModal, setShowFilterModal] = useState(false);
+  const [filters, setFilters] = useState<UserFilters>(emptyFilters);
   const pageCount = Math.max(1, Math.ceil(totalUsers / rowsPerPage));
+  const navigate = useNavigate();
+
+  const tableUsers = useMemo(
+    () => usersByPage[currentPage] ?? [],
+    [usersByPage, currentPage],
+  );
+
+  const filteredUsers = useMemo(() => {
+    return tableUsers.filter((user) => {
+      const joinedDate = new Date(user.joinedAt).toISOString().slice(0, 10);
+
+      return (
+        (!filters.company || user.company === filters.company) &&
+        (!filters.name ||
+          user.name.toLowerCase().includes(filters.name.toLowerCase())) &&
+        (!filters.email ||
+          user.email.toLowerCase().includes(filters.email.toLowerCase())) &&
+        (!filters.joinedAt || joinedDate === filters.joinedAt) &&
+        (!filters.phoneNumber ||
+          user.phoneNumber.includes(filters.phoneNumber)) &&
+        (!filters.status || user.status === filters.status)
+      );
+    });
+  }, [filters, tableUsers]);
 
   const sortedUsers = useMemo(() => {
-    const tableUsers = usersByPage[currentPage] ?? [];
-
-    return [...tableUsers].sort((firstUser, secondUser) => {
+    return [...filteredUsers].sort((firstUser, secondUser) => {
       const firstValue = getSortValue(firstUser, sortKey);
       const secondValue = getSortValue(secondUser, sortKey);
 
@@ -131,7 +181,7 @@ const UsersTable = () => {
       if (firstValue > secondValue) return sortDirection === "asc" ? 1 : -1;
       return 0;
     });
-  }, [sortDirection, sortKey, usersByPage, currentPage]);
+  }, [filteredUsers, sortDirection, sortKey]);
 
   function handleSort(key: ColumnKey) {
     if (sortKey === key) {
@@ -143,6 +193,83 @@ const UsersTable = () => {
     setSortDirection("asc");
   }
 
+  const closeMenu = useCallback(() => {
+    setOpenMenuUserId(null);
+  }, []);
+
+  const handleViewDetails = useCallback(
+    (user: User) => {
+      dispatch(saveUser(user));
+      closeMenu();
+      navigate(`/admin/users/${user.id}`);
+    },
+    [closeMenu, dispatch, navigate],
+  );
+
+  const handleBlacklistUser = useCallback(
+    (user: User) => {
+      dispatch(blacklistUser({ ...user, status: "Blacklisted" }));
+      closeMenu();
+    },
+    [closeMenu, dispatch],
+  );
+
+  const handleActivateUser = useCallback(
+    (user: User) => {
+      dispatch(activateUser({ ...user, status: "Active" }));
+      closeMenu();
+    },
+    [closeMenu, dispatch],
+  );
+
+  const handleApplyFilters = useCallback((nextFilters: UserFilters) => {
+    setFilters(nextFilters);
+    setShowFilterModal(false);
+  }, []);
+
+  const handleResetFilters = useCallback(() => {
+    setFilters(emptyFilters);
+    setShowFilterModal(false);
+  }, []);
+
+  const rowContent = (_index: number, user: User) => (
+    <>
+      <TableCell>{user.company}</TableCell>
+      <TableCell>{user.name}</TableCell>
+      <TableCell>{user.email}</TableCell>
+      <TableCell>{user.phoneNumber}</TableCell>
+      <TableCell>{formatDate(user.joinedAt)} 10:00 AM</TableCell>
+      <TableCell>
+        <span className={`status_badge ${user.status.toLowerCase()}`}>
+          {user.status}
+        </span>
+      </TableCell>
+      <TableCell className="users_table_action">
+        <button
+          type="button"
+          className="users_table_action_button"
+          aria-label={`Open actions for ${user.name}`}
+          onClick={() =>
+            setOpenMenuUserId((currentUserId) =>
+              currentUserId === user.id ? null : user.id,
+            )
+          }
+        >
+          <BsThreeDotsVertical color="var(--alt-secondary-color)" />
+        </button>
+        {openMenuUserId === user.id && (
+          <MenuDialog
+            user={user}
+            onActivateUser={handleActivateUser}
+            onBlacklistUser={handleBlacklistUser}
+            onClose={closeMenu}
+            onViewDetails={handleViewDetails}
+          />
+        )}
+      </TableCell>
+    </>
+  );
+
   useEffect(() => {
     dispatch(fetchUsers(currentPage));
   }, [currentPage, dispatch]);
@@ -153,7 +280,18 @@ const UsersTable = () => {
         data={sortedUsers}
         components={tableComponents}
         fixedHeaderContent={() =>
-          fixedHeaderContent(sortKey, sortDirection, handleSort)
+          fixedHeaderContent(
+            sortKey,
+            sortDirection,
+            handleSort,
+            showFilterModal,
+            filters,
+            tableUsers,
+            () => setShowFilterModal((isOpen) => !isOpen),
+            handleApplyFilters,
+            () => setShowFilterModal(false),
+            handleResetFilters,
+          )
         }
         itemContent={rowContent}
       />

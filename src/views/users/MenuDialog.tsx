@@ -1,20 +1,62 @@
 import { MdOutlineVisibility } from "react-icons/md";
 import { CiUser } from "react-icons/ci";
 import { BsFillPersonXFill } from "react-icons/bs";
-const MenuDialog = () => {
+import { useEffect, useRef } from "react";
+
+import type { User } from "../../store/features/users_slice";
+
+interface MenuDialogProps {
+  user: User;
+  onActivateUser: (user: User) => void;
+  onBlacklistUser: (user: User) => void;
+  onClose: () => void;
+  onViewDetails: (user: User) => void;
+}
+
+const MenuDialog = ({
+  user,
+  onActivateUser,
+  onBlacklistUser,
+  onClose,
+  onViewDetails,
+}: MenuDialogProps) => {
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (!dialogRef.current?.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [onClose]);
+
   return (
-    <div className="menu_dialog bg-(--primary-color) p-(--gap) rounded-(--radius) absolute top-0 right-0 shadow-lg  space-y-4">
-      <button>
+    <div ref={dialogRef} className="menu_dialog" role="menu">
+      <button type="button" role="menuitem" onClick={() => onViewDetails(user)}>
         <MdOutlineVisibility />
         View Details
       </button>
-      <button>
+      <button
+        type="button"
+        role="menuitem"
+        onClick={() => onBlacklistUser(user)}
+      >
         <BsFillPersonXFill />
         Blacklist User
       </button>
-      <button>
+      <button
+        type="button"
+        role="menuitem"
+        onClick={() => onActivateUser(user)}
+      >
         <CiUser />
-        Active User
+        Activate User
       </button>
     </div>
   );

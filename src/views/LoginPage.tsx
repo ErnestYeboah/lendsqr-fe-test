@@ -8,7 +8,7 @@ const LoginPage = () => {
   }, []);
 
   return (
-    <div className="login_wrapper p-(--padding) grid grid-rows-[auto_1fr] gap-(--padding) ">
+    <div className="login_wrapper p-(--padding) grid grid-rows-[auto_1fr] gap-(--large-gap) ">
       <figure>
         <img src="/assets/images/lendsqr_logo.png" alt="Lendsqr Logo" />
       </figure>
