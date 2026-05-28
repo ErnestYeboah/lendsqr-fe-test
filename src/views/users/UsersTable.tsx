@@ -184,7 +184,7 @@ const UsersTable = () => {
     });
   }, [filteredUsers, sortDirection, sortKey]);
 
-  function handleSort(key: ColumnKey) {
+  const handleSort = (key: ColumnKey) => {
     if (sortKey === key) {
       setSortDirection((direction) => (direction === "asc" ? "desc" : "asc"));
       return;
@@ -192,7 +192,7 @@ const UsersTable = () => {
 
     setSortKey(key);
     setSortDirection("asc");
-  }
+  };
 
   const closeMenu = useCallback(() => {
     setOpenMenuUserId(null);

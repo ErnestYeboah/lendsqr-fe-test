@@ -4,7 +4,7 @@ import { TbUsersGroup } from "react-icons/tb";
 import { RiNewspaperLine } from "react-icons/ri";
 import { FaCoins } from "react-icons/fa6";
 import UsersTable from "./UsersTable";
-import "./users.css";
+import "./users_page.css";
 import { useSelector } from "react-redux";
 import { usersReducer } from "../../store/features/users_slice";
 import { useEffect } from "react";
@@ -16,7 +16,7 @@ const UsersPage = () => {
   }, []);
 
   return (
-    <div className="p-(--padding) overflow-hidden">
+    <div className="p-(--padding) overflow-x-hidden">
       <h2 className="text-(--accent-color) text-(length:--step-1)">Users</h2>
       <div className="users_card_wrapper ">
         <UsersCard>

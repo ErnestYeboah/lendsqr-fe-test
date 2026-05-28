@@ -9,19 +9,19 @@ const InternetStatusBar = () => {
   useEffect(() => {
     let hideTimeout: ReturnType<typeof setTimeout>;
 
-    function handleOnline() {
+    const handleOnline = () => {
       setIsOnline(true);
       setIsVisible(true);
       hideTimeout = setTimeout(() => {
         setIsVisible(false);
       }, 1500);
-    }
+    };
 
-    function handleOffline() {
+    const handleOffline = () => {
       clearTimeout(hideTimeout);
       setIsOnline(false);
       setIsVisible(true);
-    }
+    };
 
     window.addEventListener("online", handleOnline);
     window.addEventListener("offline", handleOffline);
@@ -42,7 +42,7 @@ const InternetStatusBar = () => {
         isOnline ? "bg-green-300" : "bg-red-300",
       )}
     >
-      <p className="justify-self-center">
+      <p className="justify-self-center text-(length:--step--1)">
         {isOnline
           ? "Connected"
           : "You are not connected to the internet , please check your connection"}

@@ -3,6 +3,7 @@ import { FaStar } from "react-icons/fa";
 
 import type { User } from "../../../store/features/users_slice";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const userDetailsTabs = [
   "General Details",
   "Documents",

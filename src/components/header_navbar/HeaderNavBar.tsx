@@ -11,7 +11,7 @@ const HeaderNavBar = () => {
   return (
     <>
       <InternetStatusBar />
-      <nav className="shadow-sm sticky max-w-full left-0 right-0 top-0 h-16 px-(--padding-min) bg-(--primary-color) flex justify-between">
+      <nav className="shadow-sm sticky z-80 max-w-full left-0 right-0 top-0 h-16 px-(--padding-min) bg-(--primary-color) flex justify-between">
         <div className="flex h-[70%] max-[992px]:hidden max-w-100 overflow-hidden rounded-sm">
           <input
             type="search"
@@ -43,6 +43,7 @@ const HeaderNavBar = () => {
           </p>
         </div>
 
+        {/* Mobile Header Items */}
         <div className="mobile_header_items ">
           <LuMenu
             size={25}
@@ -50,7 +51,8 @@ const HeaderNavBar = () => {
             onClick={() => dispatch(toggleSideBar(true))}
           />
           <div className="flex gap-(--gap) items-center">
-            <CiBellOn size={"25"} />
+            <IoIosSearch size={"20"} />
+            <CiBellOn size={"20"} />
             <figure className="avatar">
               <img
                 width={40}

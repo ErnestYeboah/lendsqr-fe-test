@@ -151,7 +151,7 @@ export const UsersSlice = createSlice({
       })
       .addCase(fetchUsers.rejected, (state) => {
         state.status = "failed";
-        toast.error("An error occured could not fetch user data");
+        toast.error("An error occured , could not fetch user data");
       });
   },
 });

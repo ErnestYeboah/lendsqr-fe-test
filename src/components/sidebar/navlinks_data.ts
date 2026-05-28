@@ -49,7 +49,7 @@ export const navlinks: Navlinks[] = [
       },
       {
         id: 2,
-        to: "/",
+        to: "/guarantors",
         label: "Guarantors",
         icon: PiUsersThreeDuotone,
       },

@@ -129,9 +129,7 @@ const UsersFilterModal = ({
           type="text"
           placeholder="Phone Number"
           value={draftFilters.phoneNumber}
-          onChange={(event) =>
-            updateFilter("phoneNumber", event.target.value)
-          }
+          onChange={(event) => updateFilter("phoneNumber", event.target.value)}
         />
       </label>
 
@@ -169,5 +167,6 @@ const UsersFilterModal = ({
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export { emptyFilters };
 export default UsersFilterModal;

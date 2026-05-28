@@ -19,7 +19,7 @@
   --gap: 1rem;
   --large-gap: clamp(6.75rem, 6.4891rem + 1.3043vw, 7.5rem);
   --radius: 5px;
-  --padding-min: 1rem;
+  --padding-min: 1.5rem;
   --padding: clamp(2rem, 4vw, 3rem);
 }
 * {

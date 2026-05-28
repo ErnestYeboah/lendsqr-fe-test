@@ -4,6 +4,7 @@ import LoginPage from "./views/LoginPage";
 import AdminLayout from "./views/AdminLayout";
 import UsersPage from "./views/users/UsersPage";
 import UserDetailsPage from "./views/users/users_details/UserDetailsPage";
+import NotFound from "./views/NotFound";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="users" element={<UsersPage />} />
           <Route path="users/:id" element={<UserDetailsPage />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );
