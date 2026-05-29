@@ -66,7 +66,8 @@
 .users_table_section {
   --table-fontsize: 0.7rem;
   margin-block: var(--padding);
-  height: 70vh;
+  padding-block-end: var(--gap);
+  height: 80vh;
   border-radius: var(--radius);
   box-shadow: 3px 5px 20px rgba(0 0 0 / 0.04);
 }
@@ -271,6 +272,10 @@
 }
 
 .status_badge {
+  --_inactive-color: #545f7d;
+  --_blacklisted-color: #e4033b;
+  --_pending-color: #e9b200;
+  --_active-color: #39cd62;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -283,23 +288,23 @@
 }
 
 .status_badge.inactive {
-  background-color: rgba(84 95 125 / 0.06);
-  color: #545f7d;
+  background-color: rgba(from var(--_inactive-color) r g b / 0.2);
+  color: var(--_inactive-color);
 }
 
 .status_badge.pending {
-  background-color: rgba(233 178 0 / 0.1);
-  color: #e9b200;
+  background-color: rgba(from var(--_pending-color) r g b / 0.2);
+  color: var(--_pending-color);
 }
 
 .status_badge.blacklisted {
-  background-color: rgba(228 3 59 / 0.1);
-  color: #e4033b;
+  background-color: rgba(from var(--_blacklisted-color) r g b / 0.1);
+  color: var(--_blacklisted-color);
 }
 
 .status_badge.active {
-  background-color: rgba(57 205 98 / 0.1);
-  color: #39cd62;
+  background-color: rgba(from var(--_active-color) r g b / 0.2);
+  color: var(--_active-color);
 }
 
 .users_table_footer {
@@ -307,7 +312,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  color: #545f7d;
+  color: var(--alt-secondary-color);
   font-size: 0.78rem;
   padding-top: 1rem;
 }

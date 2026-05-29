@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   activateUser,
   blacklistUser,
@@ -18,26 +18,38 @@ const UserDetailsPage = () => {
   useEffect(() => {
     document.title = "Lendsqr | User Details";
   }, []);
-  const { selectedUser } = useSelector(usersReducer);
+
+  const navigate = useNavigate();
+
+  const { id } = useParams<{ id: string }>();
+
+  const { users, selectedUser } = useSelector(usersReducer);
+
   const dispatch = useDispatch<AppDispatch>();
+
   const [activeTab, setActiveTab] = useState<UserDetailsTab>("General Details");
 
-  if (!selectedUser) {
+  const foundUser =
+    selectedUser && selectedUser.id === id
+      ? selectedUser
+      : users.find((user) => user.id === id) || null;
+
+  if (!foundUser) {
     return (
       <div className="p-(--padding)">
-        <Link
-          to="/admin/users"
-          className="text-(--accent-color) text-(length:--step--1) flex items-center gap-2"
+        <button
+          onClick={() => navigate(-1)}
+          className="back_btn text-(--accent-color) text-(length:--step--1) flex items-center gap-2"
         >
           <HiOutlineArrowNarrowLeft />
           Back to Users
-        </Link>
+        </button>
         <p className="mt-6 text-(--accent-color)">No user selected</p>
       </div>
     );
   }
 
-  const statusClass = selectedUser.status.toLowerCase();
+  const statusClass = foundUser.status.toLowerCase();
   const isBlacklisted = statusClass === "blacklisted";
   const isActive = statusClass === "active";
 
@@ -58,9 +70,7 @@ const UserDetailsPage = () => {
         <div className="flex gap-4">
           <button
             onClick={() =>
-              dispatch(
-                blacklistUser({ ...selectedUser, status: "Blacklisted" }),
-              )
+              dispatch(blacklistUser({ ...foundUser, status: "Blacklisted" }))
             }
             disabled={isBlacklisted}
             className={
@@ -74,7 +84,7 @@ const UserDetailsPage = () => {
 
           <button
             onClick={() =>
-              dispatch(activateUser({ ...selectedUser, status: "Active" }))
+              dispatch(activateUser({ ...foundUser, status: "Active" }))
             }
             disabled={isActive}
             className={
@@ -89,12 +99,12 @@ const UserDetailsPage = () => {
       </div>
 
       <UserDetailsHeader
-        user={selectedUser}
+        user={foundUser}
         activeTab={activeTab}
         onTabChange={setActiveTab}
       />
       {activeTab === "General Details" ? (
-        <PersonalInformationWrapper selectedUser={selectedUser} />
+        <PersonalInformationWrapper selectedUser={foundUser} />
       ) : (
         <UnavailablePage onGoBack={() => setActiveTab("General Details")} />
       )}

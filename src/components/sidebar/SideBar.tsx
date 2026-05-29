@@ -5,7 +5,11 @@ import { FaChevronDown } from "react-icons/fa6";
 import { BsFillHouseFill } from "react-icons/bs";
 import { cn } from "../../utils/clsx_merge";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleSideBar, usersReducer } from "../../store/features/users_slice";
+import {
+  clearSelectedUser,
+  toggleSideBar,
+  usersReducer,
+} from "../../store/features/users_slice";
 import { Link } from "react-router-dom";
 import { IoMdExit } from "react-icons/io";
 const SideBar = () => {
@@ -49,6 +53,7 @@ const SideBar = () => {
             </a>
             <Link
               to={"/"}
+              onClick={() => dispatch(clearSelectedUser())}
               className="text-(length:--step--1)  text-(--accent-color) p-(--padding-min) flex items-center gap-2"
             >
               <IoMdExit />

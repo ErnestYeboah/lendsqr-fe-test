@@ -106,7 +106,7 @@ const fixedHeaderContent = (
           >
             {column.label}
           </button>
-          {column.key === "company" && (
+          {column.key === "company" ? (
             <>
               <button
                 type="button"
@@ -130,6 +130,19 @@ const fixedHeaderContent = (
                 />
               )}
             </>
+          ) : (
+            <button
+              type="button"
+              className="users_filter_button"
+              onClick={() => onSort(column.key)}
+              aria-label={`Sort by ${column.label}`}
+            >
+              <IoFilter
+                className={
+                  sortKey === column.key ? `is_sorted ${sortDirection}` : ""
+                }
+              />
+            </button>
           )}
         </div>
       </TableCell>

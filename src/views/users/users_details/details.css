@@ -3,6 +3,12 @@
   padding: var(--padding);
 }
 
+.back_btn {
+  background-color: transparent;
+  color: var(--accent-color);
+  padding: 0;
+}
+
 .details_btns {
   font-size: 0.7rem;
   background-color: transparent;

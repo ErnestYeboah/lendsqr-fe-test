@@ -62,31 +62,10 @@ A premium, feature-rich administrator dashboard built with **React**, **TypeScri
 
 Clone the repository and install all required node modules:
 
-```bash
-npm install
-```
-
-### 2. Running the Project Locally
-
-The application depends on both the frontend development server and the mock database server. You should start both:
-
-#### Option A: Run concurrently (Default local setup)
-
-1. **Start the API Server**:
-
-   ```bash
-   npm run api
-   ```
-
-   This will spin up `json-server` on port `3001` parsing `db.json`.
-
-2. **Start the Frontend Application**:
-   ```bash
-   npm run dev
-   ```
-   Open `http://localhost:5173` in your browser to view the application.
-
----
+- `git clone` https://github.com/ErnestYeboah/lendsqr-fe-test.git
+- Install: `npm install`
+- Dev server: `npm run dev`
+- Mock API: `npm run server`
 
 ## 📜 Available Scripts
 

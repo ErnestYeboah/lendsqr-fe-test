@@ -158,5 +158,10 @@ export const UsersSlice = createSlice({
 
 export default UsersSlice.reducer;
 export const usersReducer = (state: { users: State }) => state.users;
-export const { toggleSideBar, activateUser, blacklistUser, saveUser } =
-  UsersSlice.actions;
+export const {
+  toggleSideBar,
+  activateUser,
+  blacklistUser,
+  saveUser,
+  clearSelectedUser,
+} = UsersSlice.actions;
